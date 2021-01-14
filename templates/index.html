@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+{% if books %}
+<div class="container-fluid">
+    <div class="row">
+        {% for book in books %}
+            <div class="col-sm-4 col-lg-3 col-xl-2">
+                <div class="pt-1 p-3 book">
+                    <div class="container-book">
+                        <a href="/viewer/{{book.id}}"><img class="img-fluid rounded mx-auto d-block" src="{{book.path_cover}}"></a>
+                    </div>
+                    <div class="container-data">
+                        <h3 class="text-center mb-0"><a href="/viewer/{{book.id}}">{{book.title}}</a></h3>
+                        <h4 class="text-center"><a href="#">{{book.publisher}}</a></h4>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+{% endif %}
+
+{% endblock %}
