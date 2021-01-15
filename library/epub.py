@@ -2,6 +2,7 @@ import json
 import logging
 import os
 import zipfile
+import re
 
 import xmltodict
 from configuration import configuration
@@ -27,7 +28,17 @@ class Epub:
 
             self.identifier = self._get_value(self.content["package"]["metadata"]["dc:identifier"]);
             self.title = self._get_value(self.content["package"]["metadata"]["dc:title"]);
-            self.publisher = self._get_value(self.content["package"]["metadata"]["dc:publisher"]);
+
+            if "dc:creator" in self.content["package"]["metadata"]:
+                self.creator = self._get_value(self.content["package"]["metadata"]["dc:creator"]);
+            else:
+                self.creator = "Without creator";
+
+            if "dc:publisher" in self.content["package"]["metadata"]:
+                self.publisher = self._get_value(self.content["package"]["metadata"]["dc:publisher"]);
+            else:
+                self.publisher = "Without publisher";
+
             self.language = self._get_value(self.content["package"]["metadata"]["dc:language"]);
 
         self.get_and_save_cover();
@@ -45,17 +56,32 @@ class Epub:
                     else:
                         cover.write(zip_file.read(path_cover_epub));
         except Exception as error:
-            logging.warning(f"No se ha guardar la portada. -> {error}");
+            logging.warning(f"The cover has not been saved. -> {error}");
 
     def get_page(self, page):
-        data = [];
+        pathTemp = os.getcwd() + configuration["PATH_TEMP"];
+        all_data = [];
 
         for element in self.content["package"]["manifest"]["item"]:
             if "html" in element["@href"]:
-                data.append(element["@href"]);
+                all_data.append(element["@href"]);
 
-        with zipfile.ZipFile(self.path_book, "r", compression=zipfile.ZIP_DEFLATED, allowZip64=True) as zip_file:
-            return zip_file.read(data[page]).decode("utf-8");
+        try:
+            with zipfile.ZipFile(self.path_book, "r", compression=zipfile.ZIP_DEFLATED, allowZip64=True) as zip_file:
+                data = zip_file.read(all_data[page]).decode("utf-8");
+                data = data.replace("src=\"../", "src=\"");
+
+                files = re.findall("src=['\"]([^'\"]+?)['\"]", data);
+                for file_extract in files:
+                    if not "http" in file_extract:
+                        zip_file.extract(file_extract, pathTemp);
+                
+                data = data.replace("src=\"", f"src=\"{configuration['PATH_TEMP']}");
+
+                return data;
+        except Exception as error:
+            logging.warning(f"Cannot read page {all_data[page]}. -> {error}");
+            return "Page with some error. Check the log for more details.";
 
     def _get_path_cover(self):
         try:
@@ -73,7 +99,7 @@ class Epub:
                 if item["@id"] == item_cover:
                     return item["@href"];
         except Exception as error:
-            logging.warning(f"No se ha encontrado la portada. -> {error}");           
+            logging.warning(f"The cover has not been found. -> {error}");           
 
     def _get_value(self, content):
         if isinstance(content, list):

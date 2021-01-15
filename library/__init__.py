@@ -16,12 +16,15 @@ class Library:
     def __init__(self):
         self.pathBooks = os.getcwd() + configuration["PATH_BOOKS"];
         self.pathCovers = os.getcwd() + "/" + configuration["PATH_COVERS"];
+        self.pathTemp = os.getcwd() + configuration["PATH_TEMP"];
 
         try:
             if not os.path.exists(self.pathBooks):
                 os.mkdir(self.pathBooks);
             if not os.path.exists(self.pathCovers):
                 os.mkdir(self.pathCovers);
+            if not os.path.exists(self.pathTemp):
+                os.mkdir(self.pathTemp);
         except Exception as error:
             logging.error(f"Cannot create the necessary paths for the operation of the application -> {error}");
 
@@ -43,7 +46,9 @@ class Library:
         for book in self.get_books():
             if not book.path_book in books_files:
                 logging.warning(f"Missing book -> {book.filename}");
-                Book[book.id].delete();
+                book = Book[book.id];
+                book.remove_cover();
+                book.delete();
 
         for book_name in books_files:
             if orm.count(book for book in Book if book.path_book == book_name) == 0:
@@ -54,7 +59,7 @@ class Library:
 
     @orm.db_session
     def add_book(self, name):
-        _, extension = os.path.splitext(name);
+        extension = get_extension(name);
         
         if extension == ".epub":
             new_epub = Epub(name);
@@ -63,6 +68,7 @@ class Library:
                     identifier=new_epub.identifier,
                     title=new_epub.title,
                     publisher=new_epub.publisher,
+                    creator=new_epub.creator,
                     language=new_epub.language,
                     path_book=new_epub.path_book,
                     path_cover=new_epub.path_cover,

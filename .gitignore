@@ -134,4 +134,5 @@ dmypy.json
 #Hattusa
 database.sqlite
 /static/covers/*
+/static/temp/*
 /books/*

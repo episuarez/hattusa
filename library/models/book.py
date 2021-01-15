@@ -5,6 +5,7 @@ import os
 class Book(db.Entity):
     identifier = orm.Required(orm.StrArray);
     title = orm.Required(str);
+    creator = orm.Required(orm.StrArray);
     publisher = orm.Required(str);
     language = orm.Required(str);
     path_book = orm.Required(str);
@@ -13,7 +14,6 @@ class Book(db.Entity):
     extension = orm.Required(str);
     number_of_pages = orm.Required(int);
 
-    @staticmethod
-    def remove_cover():
-        if os.path.exists(Book.path_cover):
-            os.remove(Book.path_cover);
+    def remove_cover(self):
+        if os.path.exists(self.path_cover):
+            os.remove(self.path_cover);
