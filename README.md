@@ -12,8 +12,12 @@ At the moment it is not open to the contribution of other developers, since the 
 - [X] Read EPUB
 - [X] Read PDF
 - [ ] Read MOBI
-- [ ] Read CBZ
-- [ ] Read CBR
+- [X] Read CBZ
+- [X] Read CBR
+- [ ] Homogenize reading with the same format, regardless of the book.
+- [ ] Read only available pages
+- [ ] Grouping by tags or equivalent
+- [ ] Recursive traversal of the library
 - [X] Create a beautiful interface
 - [ ] Improve speed
 - [ ] Save reading position

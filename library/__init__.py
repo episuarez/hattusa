@@ -7,6 +7,8 @@ from pony import orm
 
 from library.epub import Epub
 from library.pdf import Pdf
+from library.cbz import Cbz
+from library.cbr import Cbr
 
 from .models.book import Book
 from slugify import slugify
@@ -99,6 +101,32 @@ class Library:
                 );
             except Exception as error:
                 logging.warning(f"Error when adding the new book -> {error}");
+        elif extension == ".cbz":
+            new_pdf = Cbz(name);
+            try:
+                new_book = Book(
+                    title=new_pdf.title,
+                    path_book=new_pdf.path_book,
+                    path_cover=new_pdf.path_cover,
+                    filename=new_pdf.filename,
+                    extension=new_pdf.extension,
+                    number_of_pages=new_pdf.number_of_pages
+                );
+            except Exception as error:
+                logging.warning(f"Error when adding the new book -> {error}");
+        elif extension == ".cbr":
+            new_pdf = Cbr(name);
+            try:
+                new_book = Book(
+                    title=new_pdf.title,
+                    path_book=new_pdf.path_book,
+                    path_cover=new_pdf.path_cover,
+                    filename=new_pdf.filename,
+                    extension=new_pdf.extension,
+                    number_of_pages=new_pdf.number_of_pages
+                );
+            except Exception as error:
+                logging.warning(f"Error when adding the new book -> {error}");
 
     @orm.db_session
     def get_books(self):
@@ -118,6 +146,10 @@ class Library:
             return Epub(book).get_page(page);
         elif extension == ".pdf":
             return Pdf(book).get_page(page);
+        elif extension == ".cbz":
+            return Cbz(book).get_page(page);
+        elif extension == ".cbr":
+            return Cbr(book).get_page(page);
 
     def _remove_all_files(self, directory):
         for filename in os.listdir(directory):
