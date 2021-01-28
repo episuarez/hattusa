@@ -19,6 +19,8 @@ At the moment it is not open to the contribution of other developers, since the 
 - [ ] Save reading position
 - [ ] Dark mode
 - [ ] User management
+- [ ] Image creation for Docker
+- [ ] Executable creation for Windows, Linux and Mac
 
 ## Steps to install
 * `pip install -r requirements.txt`
