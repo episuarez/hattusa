@@ -28,5 +28,5 @@ At the moment it is not open to the contribution of other developers, since the 
 * `env/Scripts/python main.py`
 
 ## Screenshot
-<img src="https://raw.githubusercontent.com/OwariStudios/Hattusa/main/screenshot01.jpeg?raw=true" alt="Hattusa"/>
-<img src="https://raw.githubusercontent.com/OwariStudios/Hattusa/main/screenshot02.jpeg?raw=true" alt="Hattusa"/>
+<img src="https://raw.githubusercontent.com/OwariStudios/Hattusa/main/screenshot01.jpg?raw=true" alt="Hattusa"/>
+<img src="https://raw.githubusercontent.com/OwariStudios/Hattusa/main/screenshot02.jpg?raw=true" alt="Hattusa"/>
