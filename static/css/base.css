@@ -1,5 +1,5 @@
 body {
-    
+    background: #F0F0F0;
 }
 a, a:hover, a:visited, a:active, a:focus {
     text-decoration: none;
@@ -9,40 +9,62 @@ img {
     display: block;
 }
 
+.dark {
+    background-color: #000;
+}
+
+.configuration {
+    position: fixed;
+    bottom: 10px;
+    left: 10px;
+    z-index: 1000;
+}
+.toppage {
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+    z-index: 1000;
+}
+
+.viewer .title {
+    font-size: 1.1rem;
+    font-weight: bold;
+}
+
+.controls  {
+    position: fixed;
+    top: 86px;
+}
+.controls .col {
+    min-height: 100vh;
+}
+
+.book {
+    text-align: center;
+    padding: 5px 0;
+    color: #464646 !important;
+}
+.book .title {
+    font-size: 1.1rem;
+    font-weight: bold;
+}
+.container-book img {
+    height: 300px;
+    box-shadow: 0px 0px 20px 0px rgba(0,0,0,0.51);
+    -webkit-box-shadow: 0px 0px 20px 0px rgba(0,0,0,0.51);
+    -moz-box-shadow: 0px 0px 20px 0px rgba(0,0,0,0.51);
+}
+.container-data {
+    height: 85px;
+}
+
 .page {
     background-color: rgb(240, 240, 240);
     color: #464646;
 }
-.book {
-    text-align: center;
-    background-color: #FFF;
-    padding: 15px 0;
-}
-.book p {
-    margin-bottom: 0;
-}
-.book .publisher {
-    font-weight: bold;
-    font-size: 0.8rem;
-}
-.book .title {
-    font-size: 1.1rem;
-    height: 50px;
-}
 
-.book h3 a {
-    font-size: 1.1rem;
-    color: #464646;
-}
-.book h4 a {
-    font-size: 0.9rem;
-    color: #464646;
-}
-.container-book {
-    height: 350px;
-    vertical-align: middle;
-    display: table-cell;
-}
-.container-data {
-    height: 125px;
+.toast-container {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
 }

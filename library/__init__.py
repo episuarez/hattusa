@@ -1,10 +1,12 @@
 import logging
 import os
+import shutil
 
 from configuration import configuration
 from pony import orm
 
 from library.epub import Epub
+from library.pdf import Pdf
 
 from .models.book import Book
 from slugify import slugify
@@ -28,17 +30,27 @@ class Library:
         except Exception as error:
             logging.error(f"Cannot create the necessary paths for the operation of the application -> {error}");
 
-        self.sync_books();
+        self.synchronization();
+
+    def removes_covers(self):
+        self._remove_all_files(self.pathCovers);
+
+    def delete_cache(self):
+        self._remove_all_files(self.pathTemp);
 
     @orm.db_session
-    def sync_books(self):
+    def synchronization(self):
+        self.removes_covers();
+        self.delete_cache();
+
         logging.info("Start of synchronization");
         books_files = [];
 
         for book in os.listdir(self.pathBooks):
             new_path = self.pathBooks + slugify(get_name(book)) + get_extension(book);
 
-            os.rename(self.pathBooks + book, new_path);
+            if not os.path.exists(new_path):
+                os.rename(self.pathBooks + book, new_path);
 
             logging.info(f"Book detected -> {book}");
             books_files.append(new_path);
@@ -65,16 +77,25 @@ class Library:
             new_epub = Epub(name);
             try:
                 new_book = Book(
-                    identifier=new_epub.identifier,
                     title=new_epub.title,
-                    publisher=new_epub.publisher,
-                    creator=new_epub.creator,
-                    language=new_epub.language,
                     path_book=new_epub.path_book,
                     path_cover=new_epub.path_cover,
                     filename=new_epub.filename,
                     extension=new_epub.extension,
                     number_of_pages=10
+                );
+            except Exception as error:
+                logging.warning(f"Error when adding the new book -> {error}");
+        elif extension == ".pdf":
+            new_pdf = Pdf(name);
+            try:
+                new_book = Book(
+                    title=new_pdf.title,
+                    path_book=new_pdf.path_book,
+                    path_cover=new_pdf.path_cover,
+                    filename=new_pdf.filename,
+                    extension=new_pdf.extension,
+                    number_of_pages=new_pdf.number_of_pages
                 );
             except Exception as error:
                 logging.warning(f"Error when adding the new book -> {error}");
@@ -84,8 +105,28 @@ class Library:
         return list(orm.select(book for book in Book).order_by(lambda: book.title));
 
     @orm.db_session
+    def get_book_name(self, id_book):
+        return list(orm.select(book.title for book in Book if book.id == id_book))[0];
+
+    @orm.db_session
     def get_page_book(self, id_book, page):
         book = list(orm.select(book.path_book for book in Book if book.id == id_book))[0];
 
-        return Epub(book).get_page(page);
+        extension = os.path.splitext(os.path.basename(book))[1];
+
+        if extension == ".epub":
+            return Epub(book).get_page(page);
+        elif extension == ".pdf":
+            return Pdf(book).get_page(page);
+
+    def _remove_all_files(self, directory):
+        for filename in os.listdir(directory):
+            file_path = os.path.join(directory, filename);
+            try:
+                if os.path.isfile(file_path) or os.path.islink(file_path):
+                    os.unlink(file_path);
+                elif os.path.isdir(file_path):
+                    shutil.rmtree(file_path);
+            except Exception as error:
+                logging.warning(f"Failed to delete -> {file_path}, {error}");
 

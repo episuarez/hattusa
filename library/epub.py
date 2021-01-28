@@ -8,15 +8,15 @@ import xmltodict
 from configuration import configuration
 from slugify import slugify
 
-from .util import *
+import library.util as util
 
 logging.basicConfig(level=logging.INFO, filename="app.log", filemode="w");
 
 class Epub:
     def __init__(self, path):
         self.path_book = path;
-        self.filename = get_name(os.path.basename(path));
-        self.extension = get_extension(os.path.basename(path));
+        self.filename = util.get_name(os.path.basename(path));
+        self.extension = util.get_extension(os.path.basename(path));
 
         with zipfile.ZipFile(self.path_book, "r", compression=zipfile.ZIP_DEFLATED, allowZip64=True) as zip_file:
 
@@ -26,26 +26,13 @@ class Epub:
             self.dir_content = os.path.dirname(full_path);
             self.content = xmltodict.parse(zip_file.read(full_path).decode("utf-8"));
 
-            self.identifier = self._get_value(self.content["package"]["metadata"]["dc:identifier"]);
             self.title = self._get_value(self.content["package"]["metadata"]["dc:title"]);
-
-            if "dc:creator" in self.content["package"]["metadata"]:
-                self.creator = self._get_value(self.content["package"]["metadata"]["dc:creator"]);
-            else:
-                self.creator = "Without creator";
-
-            if "dc:publisher" in self.content["package"]["metadata"]:
-                self.publisher = self._get_value(self.content["package"]["metadata"]["dc:publisher"]);
-            else:
-                self.publisher = "Without publisher";
-
-            self.language = self._get_value(self.content["package"]["metadata"]["dc:language"]);
 
         self.get_and_save_cover();
 
     def get_and_save_cover(self):
         path_cover_epub = self._get_path_cover();
-        extension = get_extension(path_cover_epub);
+        extension = util.get_extension(path_cover_epub);
         self.path_cover = configuration["PATH_COVERS"] + slugify(self.filename) + extension;
 
         try:
