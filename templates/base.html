@@ -1,5 +1,5 @@
 <!doctype html>
-<html>
+<html lang="es">
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -9,10 +9,16 @@
 
         <link href="/static/css/base.css" rel="stylesheet">
     </head>
-    <body>
+    <body class="{% if dark_mode == 'true' %}dark_mode{% endif %}">
         <nav class="navbar">
             <div class="container-fluid justify-content-center">
-                <a class="navbar-brand" href="/"><img src="/static/logo.svg" height="60px"></a>
+                <a class="navbar-brand" href="/">
+                    {% if dark_mode == 'true' %}
+                        <img id="logo" src="/static/logo_white.svg" height="60px">
+                    {% else %}
+                        <img id="logo" src="/static/logo.svg" height="60px">
+                    {% endif %}
+                </a>
             </div>
         </nav>
 
@@ -42,6 +48,8 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
+                        <p>You can set the dark mode <a href="#" class="btn btn-primary ml-auto ms-2" id="theme-toggler" onclick="dark_mode()">Dark mode</a></p>
+
                         <p>To change the file paths, to avoid errors, it can only be done by modifying the configuration.py file and restarting the application.</p>
 
                         <div class="mb-2">
@@ -95,10 +103,25 @@
 
         <script src="/static/lib/jquery-3.5.1/jquery-3.5.1.slim.min.js"></script>
         <script src="/static/lib/bootstrap-5.0.0-beta1-dist/js/bootstrap.bundle.min.js"></script>
+        <script src="/static/lib/js.cookie-3.0.0/js.cookie.min.js"></script>
 
         {% block script %}{% endblock %}
 
         <script>
+            function dark_mode() {
+                var element = document.body;
+                element.classList.toggle("dark_mode");
+
+                if (element.classList.contains("dark_mode")) {
+                    Cookies.set("dark_mode", "true");
+                    document.getElementById("logo").src="/static/logo_white.svg";
+                } else {
+                    Cookies.set("dark_mode", "false");
+                    document.getElementById("logo").src="/static/logo.svg";
+                }
+
+                console.log(Cookies.get("dark_mode"));
+            }
             function toppage() {
                 $('html,body').scrollTop(0);
             }

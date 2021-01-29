@@ -9,8 +9,26 @@ img {
     display: block;
 }
 
-.dark {
+.dark_mode {
     background-color: #000;
+    color: #FFF;
+}
+.dark_mode .navbar-brand img {
+    fill: #FFF;
+}
+.dark_mode .modal-content {
+    background-color: #000;
+    color: #FFF;
+}
+.dark_mode .book {
+    color: #FFF !important;
+}
+.dark_mode .page {
+    background-color: #000;
+    color: #FFF;
+}
+.dark_mode svg {
+    fill: #FFF;
 }
 
 .configuration {
@@ -59,7 +77,6 @@ img {
 }
 
 .page {
-    background-color: rgb(240, 240, 240);
     color: #464646;
 }
 
