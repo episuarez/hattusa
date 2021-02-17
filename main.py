@@ -1,7 +1,6 @@
 import threading
 
-import webview
-from flask import Flask, redirect, render_template, url_for, request
+from flask import Flask, redirect, render_template, request, url_for
 
 from configuration import configuration
 from database import db
@@ -38,14 +37,5 @@ def delete_cache():
 def viewer(id_book, page):
     return render_template("viewer.html", id_book=id_book, title=library.get_book_name(id_book), page=page, content=library.get_page_book(id_book, page), dark_mode=request.cookies.get("dark_mode"));
 
-def launch_webserver():
+if __name__ == "__main__":
     app.run(debug=configuration["DEBUG"]);
-
-if configuration["MODE_DESKTOP"]:
-    webserver = threading.Thread(target=launch_webserver, daemon=True);
-    webserver.start();
-    
-    window = webview.create_window("Hattusa", "http://127.0.0.1:5000");
-    webview.start(window);
-else:
-    launch_webserver();
