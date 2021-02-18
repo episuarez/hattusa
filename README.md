@@ -1,11 +1,33 @@
 # Hattusa
 
 Hattusa is a multi-format book reader.
-You will be able to read soon, PDF/EPUB/MOBI/CBZ/CBR and more.
+Currently it can read EPUB, PDF, CBZ and CBR. More formats will be available in the future.
 
-You can also run it from a web server so that anyone can read the books served from there. Or you can run it as a desktop web application for any platform, from Windows, Linux, MacOS and systems like Rasberry-PI, as long as you run a python interpreter.
+The application is a web application developed in Python on top of Flask.
 
-At the moment it is not open to the contribution of other developers, since the main structure is not defined. Later on, there will be rules and contributions will be allowed.
+At this moment contributions are not accepted yet.
+
+## How to install it?
+
+The first option is to upload it to any web server that can serve flask web pages.
+```
+gunicorn --bind 0.0.0.0.0:5000 main:app
+```
+
+And the second option is to compile the Docker image that is in the same repository or use the image uploaded to the docker hub https://hub.docker.com/r/owaristudios/hattusa.
+
+## Application details
+
+The important path of the same are:
+* /books - Reading directory of the books
+* /app.log - Log of the application
+
+These paths will be inside /app in the case of the Docker image.
+
+## More information
+
+* You can open an issue at https://github.com/OwariStudios/Hattusa/issues
+* And you can open a discussion at https://github.com/OwariStudios/Hattusa/discussions
 
 ## List of functions under development
 
@@ -25,13 +47,6 @@ At the moment it is not open to the contribution of other developers, since the 
 - [ ] User management
 - [ ] Image creation for Docker
 - [ ] Executable creation for Windows, Linux and Mac
-
-## Steps to install
-* `pip install -r requirements.txt`
-* Change in the file `configuration.py` the path value, by the path you want to consult.
-
-## Steps to launch the desktop app
-* `env/Scripts/python main.py`
 
 ## Screenshot
 <img src="https://raw.githubusercontent.com/OwariStudios/Hattusa/main/screenshot01.jpg?raw=true" alt="Hattusa"/>
