@@ -2,42 +2,54 @@ import logging
 import os
 
 import fitz
-from configuration import configuration
+from PIL import Image, ImageEnhance
 from slugify import slugify
 
-import library.util as util
+from .book import Book
 
 logging.basicConfig(level=logging.INFO, filename="app.log", filemode="w");
 
-class Pdf:
-    def __init__(self, path):
-        self.path_book = path;
-        self.filename = util.get_name(os.path.basename(path));
-        self.extension = util.get_extension(os.path.basename(path));
+class Pdf(Book):
 
-        with fitz.open(self.path_book) as pdf_file:
-            self.title = pdf_file.metadata["title"];
+    def __init__(self, id, filename, extension, path, size):
+        self.id = id;
+        self.filename = filename;
+        self.extesion = extension;
+        self.path = path;
+        self.size = size;
+
+        self.load();
+
+    def load(self):
+        with fitz.open(self.path) as pdf_file:
+            if "title" in pdf_file.metadata and pdf_file.metadata["title"] != "":
+                self.title = str(pdf_file.metadata["title"]).encode("iso-8859-1").decode("utf-8");
+            else:
+                self.title = self.filename;
+
             self.number_of_pages = len(pdf_file);
+            self.cover = f"static/covers/{slugify(self.filename)}.png";
 
-        self.get_and_save_cover();
+            with fitz.open(self.path) as pdf_file:
+                page = pdf_file.loadPage(0);
+                pix = page.getPixmap();
+                pix.writeImage(self.cover);
 
-    def get_and_save_cover(self):
-        self.path_cover = f"{configuration['PATH_COVERS']}{slugify(self.filename)}.png";
-
-        with fitz.open(self.path_book) as pdf_file:
-            page = pdf_file.loadPage(0);
-            pix = page.getPixmap();
-            pix.writeImage(self.path_cover);
-            util.image_optimization(self.path_cover, True);
+            img = Image.open(self.cover);
+            img.resize((243, 300), Image.ANTIALIAS);
+            img.save(self.cover, optimize=True, quality=80);
 
     def get_page(self, page):
-        name = f"{configuration['PATH_TEMP']}{slugify(self.filename)}-{page}.png";
+        name = f"/static/temp/{slugify(self.filename)}-{page}.png";
 
         if not os.path.exists(name[1::]):
-            with fitz.open(self.path_book) as pdf_file:
+            with fitz.open(self.path) as pdf_file:
                 page = pdf_file.loadPage(page);
-                pix = page.getPixmap();
-                pix.pillowWrite(name[1::], optimize=True);
-                util.image_optimization(name[1::]);
+                pix = page.getPixmap(matrix=fitz.Matrix(1.50, 1.50));
+                pix.writeImage(name[1::]);
 
-        return f"<img width='700px' src='{name}'>";
+                img = Image.open(name[1::]);
+                contrast = ImageEnhance.Contrast(img).enhance(2);
+                contrast.save(name[1::]);
+
+        return f"<img loading='lazy' src='{name}'>";

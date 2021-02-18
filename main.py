@@ -2,20 +2,19 @@ import threading
 
 from flask import Flask, redirect, render_template, request, url_for
 
-from configuration import configuration
-from database import db
 from library import Library
-from library.epub import Epub
 
 app = Flask(__name__);
-
-db.generate_mapping(create_tables=True);
 
 library = Library();
 
 @app.route("/", defaults={"page": 1})
 def index(page):
-    return render_template("index.html", books=library.get_books(), dark_mode=request.cookies.get("dark_mode"));
+    return render_template(
+        "index.html",
+        books=library.get_books(),
+        dark_mode=request.cookies.get("dark_mode")
+    );
 
 @app.route("/synchronization")
 def synchronization():
@@ -35,7 +34,21 @@ def delete_cache():
 @app.route("/viewer/<int:id_book>", defaults={"page": 1})
 @app.route("/viewer/<int:id_book>/<int:page>")
 def viewer(id_book, page):
-    return render_template("viewer.html", id_book=id_book, title=library.get_book_name(id_book), page=page, content=library.get_page_book(id_book, page), dark_mode=request.cookies.get("dark_mode"));
+    if id_book == None:
+        return redirect(url_for("page_not_found"));
+
+    return render_template(
+        "viewer.html",
+        id_book=id_book,
+        title=library.books[id_book].title,
+        page=page,
+        content=library.get_page_book(id_book, page),
+        dark_mode=request.cookies.get("dark_mode")
+    );
+
+@app.errorhandler(404)
+def page_not_found(error):
+    return render_template('404.html'), 404
 
 if __name__ == "__main__":
-    app.run();
+    app.run(debug=True);

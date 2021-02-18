@@ -1,14 +1,11 @@
 import json
 import logging
 import os
-import zipfile
 import re
+import zipfile
 
 import xmltodict
-from configuration import configuration
 from slugify import slugify
-
-import library.util as util
 
 logging.basicConfig(level=logging.INFO, filename="app.log", filemode="w");
 
