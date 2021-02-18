@@ -39,4 +39,4 @@ class Cbr:
             with open(name[1::], "wb") as image:
                 image.write(zip_file.read(images[page]));
 
-        return f"<img loading='lazy' src='{name}'>";
+        return f"<img class='img-fluid' loading='lazy' src='{name}'>";

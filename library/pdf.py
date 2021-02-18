@@ -52,4 +52,4 @@ class Pdf(Book):
                 contrast = ImageEnhance.Contrast(img).enhance(2);
                 contrast.save(name[1::]);
 
-        return f"<img loading='lazy' src='{name}'>";
+        return f"<img class='img-fluid' loading='lazy' src='{name}'>";
