@@ -38,4 +38,4 @@ def viewer(id_book, page):
     return render_template("viewer.html", id_book=id_book, title=library.get_book_name(id_book), page=page, content=library.get_page_book(id_book, page), dark_mode=request.cookies.get("dark_mode"));
 
 if __name__ == "__main__":
-    app.run(debug=configuration["DEBUG"]);
+    app.run();
