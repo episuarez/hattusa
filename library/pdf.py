@@ -28,7 +28,7 @@ class Pdf(Book):
                 self.title = self.filename;
 
             self.number_of_pages = len(pdf_file);
-            self.cover = f"static/covers/{slugify(self.filename)}.png";
+            self.cover = f"static/covers/{slugify(self.filename)}.webp";
 
             with fitz.open(self.path) as pdf_file:
                 page = pdf_file.loadPage(0);
@@ -37,10 +37,10 @@ class Pdf(Book):
 
             img = Image.open(self.cover);
             img.resize((243, 300), Image.ANTIALIAS);
-            img.save(self.cover, optimize=True, quality=80);
+            img.save(self.cover, "webp", optimize=True, quality=80);
 
     def get_page(self, page):
-        name = f"/static/temp/{slugify(self.filename)}-{page}.png";
+        name = f"/static/temp/{slugify(self.filename)}-{page}.webp";
 
         if not os.path.exists(name[1::]):
             with fitz.open(self.path) as pdf_file:
@@ -50,6 +50,6 @@ class Pdf(Book):
 
                 img = Image.open(name[1::]);
                 contrast = ImageEnhance.Contrast(img).enhance(2);
-                contrast.save(name[1::]);
+                contrast.save(name[1::], "webp");
 
         return f"<img class='img-fluid' loading='lazy' src='{name}'>";

@@ -1,5 +1,3 @@
-import threading
-
 from flask import Flask, redirect, render_template, request, url_for
 
 from library import Library
@@ -7,6 +5,17 @@ from library import Library
 app = Flask(__name__);
 
 library = Library();
+
+@app.after_request
+def add_security_headers(response):
+    response.headers['server'] = "Hattusa";
+
+    response.headers['x-content-type-options'] = "nosniff";
+
+    response.headers['Cache-Control'] = "no-cache";
+    response.headers['Max-age'] = "0";
+
+    return response
 
 @app.route("/", defaults={"page": 1})
 def index(page):

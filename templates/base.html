@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>hattusa</title>
 
-        <link href="/static/lib/bootstrap-5.0.0-beta1-dist/css/bootstrap.min.css" rel="stylesheet">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
 
         <link href="/static/css/base.css" rel="stylesheet">
     </head>
@@ -14,16 +14,16 @@
             <div class="container-fluid justify-content-center">
                 <a class="navbar-brand" href="/">
                     {% if dark_mode == 'true' %}
-                        <img id="logo" src="/static/logo_white.svg" height="60px">
+                        <img id="logo" src="/static/logo_white.svg" alt="logo hattusa" height="60px">
                     {% else %}
-                        <img id="logo" src="/static/logo.svg" height="60px">
+                        <img id="logo" src="/static/logo.svg" alt="logo hattusa" height="60px">
                     {% endif %}
                 </a>
             </div>
         </nav>
 
         <div class="configuration">
-            <a href="#" data-bs-toggle="modal" data-bs-target="#configuration">
+            <a href="#" data-bs-toggle="modal" data-bs-target="#configuration" title="configuration">
                 <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="#22255B" class="bi bi-gear-fill" viewBox="0 0 16 16">
                     <path d="M9.405 1.05c-.413-1.4-2.397-1.4-2.81 0l-.1.34a1.464 1.464 0 0 1-2.105.872l-.31-.17c-1.283-.698-2.686.705-1.987 1.987l.169.311c.446.82.023 1.841-.872 2.105l-.34.1c-1.4.413-1.4 2.397 0 2.81l.34.1a1.464 1.464 0 0 1 .872 2.105l-.17.31c-.698 1.283.705 2.686 1.987 1.987l.311-.169a1.464 1.464 0 0 1 2.105.872l.1.34c.413 1.4 2.397 1.4 2.81 0l.1-.34a1.464 1.464 0 0 1 2.105-.872l.31.17c1.283.698 2.686-.705 1.987-1.987l-.169-.311a1.464 1.464 0 0 1 .872-2.105l.34-.1c1.4-.413 1.4-2.397 0-2.81l-.34-.1a1.464 1.464 0 0 1-.872-2.105l.17-.31c.698-1.283-.705-2.686-1.987-1.987l-.311.169a1.464 1.464 0 0 1-2.105-.872l-.1-.34zM8 10.93a2.929 2.929 0 1 1 0-5.86 2.929 2.929 0 0 1 0 5.858z"/>
                 </svg>
@@ -31,7 +31,7 @@
         </div>
 
         <div class="toppage">
-            <a href="#" onclick="toppage()">
+            <a href="#" onclick="toppage()" title="move up">
                 <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="#22255B" class="bi bi-capslock-fill" viewBox="0 0 16 16">
                     <path d="M7.27 1.047a1 1 0 0 1 1.46 0l6.345 6.77c.6.638.146 1.683-.73 1.683H11.5v1a1 1 0 0 1-1 1h-5a1 1 0 0 1-1-1v-1H1.654C.78 9.5.326 8.455.924 7.816L7.27 1.047zM4.5 13.5a1 1 0 0 1 1-1h5a1 1 0 0 1 1 1v1a1 1 0 0 1-1 1h-5a1 1 0 0 1-1-1v-1z"/>
                 </svg>
@@ -102,7 +102,7 @@
         </div>
 
         <script src="/static/lib/jquery-3.5.1/jquery-3.5.1.slim.min.js"></script>
-        <script src="/static/lib/bootstrap-5.0.0-beta1-dist/js/bootstrap.bundle.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
         <script src="/static/lib/js.cookie-3.0.0/js.cookie.min.js"></script>
 
         {% block script %}{% endblock %}
