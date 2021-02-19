@@ -39,14 +39,13 @@ These paths will be inside /app in the case of the Docker image.
 - [ ] Homogenize reading with the same format, regardless of the book.
 - [ ] Read only available pages
 - [ ] Grouping by tags or equivalent
-- [ ] Recursive traversal of the library
+- [X] Recursive traversal of the library
 - [X] Create a beautiful interface
-- [ ] Improve speed
+- [X] Improve speed
 - [ ] Save reading position
-- [ ] Dark mode
+- [X] Dark mode
 - [ ] User management
-- [ ] Image creation for Docker
-- [ ] Executable creation for Windows, Linux and Mac
+- [X] Image creation for Docker
 
 ## Screenshot
 <img src="https://raw.githubusercontent.com/OwariStudios/Hattusa/main/screenshot01.jpg?raw=true" alt="Hattusa"/>
