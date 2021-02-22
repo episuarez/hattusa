@@ -17,11 +17,18 @@ def add_security_headers(response):
 
     return response
 
-@app.route("/", defaults={"page": 1})
-def index(page):
+@app.route("/", defaults={"directory": ""})
+@app.route("/<path:directory>")
+def index(directory):
+    path = directory;
+    if "/" in path:
+        path = f"/{path}";
+
     return render_template(
         "index.html",
-        books=library.get_books(),
+        path=path,
+        breadcrumb=library.get_breadcrumb(path),
+        items=library.get_items(directory),
         dark_mode=request.cookies.get("dark_mode")
     );
 

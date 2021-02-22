@@ -1,9 +1,11 @@
 body {
     background: #F0F0F0;
 }
+
 a, a:hover, a:visited, a:active, a:focus {
     text-decoration: none;
 }
+
 img {
     margin: 0 auto !important;
     display: block;
@@ -13,20 +15,25 @@ img {
     background-color: #000;
     color: #FFF;
 }
+
 .dark_mode .navbar-brand img {
     fill: #FFF;
 }
+
 .dark_mode .modal-content {
     background-color: #000;
     color: #FFF;
 }
+
 .dark_mode .book {
     color: #FFF !important;
 }
+
 .dark_mode .page {
     background-color: #000;
     color: #FFF;
 }
+
 .dark_mode svg {
     fill: #FFF;
 }
@@ -37,6 +44,7 @@ img {
     left: 10px;
     z-index: 1000;
 }
+
 .toppage {
     position: fixed;
     bottom: 10px;
@@ -49,35 +57,72 @@ img {
     font-weight: bold;
 }
 
-.controls  {
+.controls {
     position: fixed;
     top: 86px;
 }
+
 .controls .col {
     min-height: 100vh;
 }
 
-.book {
-    position: relative;
-    text-align: center;
+.directory {
     padding: 5px 0;
-    color: #464646 !important;
+    position: relative;
 }
-.book .title {
-    font-size: 1.1rem;
-    font-weight: bold;
+
+.directory .title {
     position: absolute;
     color: #FFF;
-    background-color: #464646;
     top: 5px;
     padding: 0 10px;
     text-align: left;
     left: 0;
 }
-.container-book img {
-    -webkit-box-shadow: 0px 0px 20px 0px rgba(0,0,0,0.51);
-    -moz-box-shadow: 0px 0px 20px 0px rgba(0,0,0,0.51);
-    box-shadow: 0px 0px 20px 0px rgba(0,0,0,0.51);
+
+.directory .container-directory {
+    background-color: #5967F9;
+    height: 350px;
+    display: flex;
+    align-items: center;
+}
+
+.directory svg {
+    margin: auto;
+    display: block;
+}
+
+.book {
+    position: relative;
+    padding: 5px 0;
+}
+
+.book .title {
+    font-size: 1rem;
+    position: absolute;
+    color: #FFF;
+    background-color: #5967F9;
+    top: 5px;
+    padding: 0 10px;
+    text-align: left;
+    left: 0;
+}
+
+.book .size {
+    position: absolute;
+    color: #FFF;
+    background-color: #5967F9;
+    padding: 0 10px;
+    bottom: 5px;
+    right: 0px;
+    font-size: 0.9rem;
+}
+
+.book .container-book img {
+    max-height: 350px;
+    -webkit-box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.51);
+    -moz-box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.51);
+    box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.51);
 }
 
 .page {

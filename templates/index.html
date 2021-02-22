@@ -2,15 +2,51 @@
 
 {% block content %}
 
-{% if books %}
 <div class="container-fluid">
     <div class="row">
-        {% for book in books %}
+        <div class="col">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    {% if breadcrumb|length > 0 %}
+                        {% for item in breadcrumb[:-1] %}
+                            <li class="breadcrumb-item" aria-current="page"><a href="{{item.path}}">{{item.name}}</a></li>
+                        {% endfor %}
+
+                        <li class="breadcrumb-item active" aria-current="page">{{breadcrumb[-1].name}}</li>
+                    {% else %}
+                        <li class="breadcrumb-item active" aria-current="page">Home</li>
+                    {% endif%}
+                </ol>
+            </nav>
+        </div>
+    </div>
+</div>
+
+{% if items %}
+<div class="container-fluid">
+    <div class="row">
+        {% for directory in items.directories %}
             <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 col-xl-2">
-                <div class="book rounded">
-                    <div class="container-book">
+                <div class="directory">
+                    <a href="{{path}}/{{directory}}">
+                        <div class="container-directory rounded">
+                            <span class="title">{{directory}}</span>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" fill="#22255B" class="bi bi-folder-fill" viewBox="0 0 16 16">
+                                <path d="M9.828 3h3.982a2 2 0 0 1 1.992 2.181l-.637 7A2 2 0 0 1 13.174 14H2.826a2 2 0 0 1-1.991-1.819l-.637-7a1.99 1.99 0 0 1 .342-1.31L.5 3a2 2 0 0 1 2-2h3.672a2 2 0 0 1 1.414.586l.828.828A2 2 0 0 0 9.828 3zm-8.322.12C1.72 3.042 1.95 3 2.19 3h5.396l-.707-.707A1 1 0 0 0 6.172 2H2.5a1 1 0 0 0-1 .981l.006.139z"/>
+                            </svg>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        {% endfor %}
+        {% for book in items.books %}
+            <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 col-xl-2">
+                <div class="book">
+                    <div class="container-book rounded">
+                        
                         <span class="title">{{book.title}}</span>
                         <a href="/viewer/{{book.id}}" class="mx-auto d-block"><img class="img-fluid rounded" alt="{{book.title}}" src="{{book.cover}}"></a>
+                        <span class="size">{{book.size}}MB</span>
                     </div>
                 </div>
             </div>
