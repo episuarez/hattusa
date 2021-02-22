@@ -72,9 +72,16 @@ class Library:
         breadcrumb = [{"name": "Home", "path": "/"}];
         temp = "";
 
-        for item in path.split("/")[1:]:
-            temp += f"/{item}";
-            breadcrumb.append({"name": item, "path": temp});
+        paths = path.split("/")[1:];
+
+        if len(paths) > 0:
+            for item in paths:
+                temp += f"/{item}";
+                breadcrumb.append({"name": item, "path": temp});
+        else:
+            breadcrumb.append({"name": path, "path": path})
+
+        print(breadcrumb)
 
         return breadcrumb;
 
