@@ -1,5 +1,7 @@
 # Hattusa
 
+[![CodeQL](https://github.com/OwariStudios/Hattusa/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/OwariStudios/Hattusa/actions/workflows/codeql-analysis.yml)
+
 Hattusa is a multi-format book reader.
 Currently it can read EPUB, PDF, CBZ and CBR. More formats will be available in the future.
 
