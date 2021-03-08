@@ -1,6 +1,13 @@
 # Hattusa
 
 [![CodeQL](https://github.com/OwariStudios/Hattusa/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/OwariStudios/Hattusa/actions/workflows/codeql-analysis.yml)
+![GitHub repo size](https://img.shields.io/github/repo-size/owaristudios/hattusa)
+![GitHub issues](https://img.shields.io/github/issues/owaristudios/hattusa)
+![GitHub](https://img.shields.io/github/license/owaristudios/hattusa)
+
+![Docker Automated build](https://img.shields.io/docker/automated/owaristudios/hattusa)
+![Docker Pulls](https://img.shields.io/docker/pulls/owaristudios/hattusa)
+![Docker Stars](https://img.shields.io/docker/stars/owaristudios/hattusa)
 
 Hattusa is a multi-format book reader.
 Currently it can read EPUB, PDF, CBZ and CBR. More formats will be available in the future.
